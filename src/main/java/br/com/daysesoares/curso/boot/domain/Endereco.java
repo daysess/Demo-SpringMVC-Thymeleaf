@@ -20,7 +20,7 @@ public class Endereco  extends AbstractEntity<Long>{
 	private String bairro;
 	
 	@Column(nullable = false)
-	private String cidde;
+	private String cidade;
 	
 	@Column(nullable = false, length = 2)
 	@Enumerated(EnumType.STRING)
@@ -55,14 +55,13 @@ public class Endereco  extends AbstractEntity<Long>{
 		this.bairro = bairro;
 	}
 
-
-	public String getCidde() {
-		return cidde;
+	public String getCidade() {
+		return cidade;
 	}
 
 
-	public void setCidde(String cidde) {
-		this.cidde = cidde;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 
