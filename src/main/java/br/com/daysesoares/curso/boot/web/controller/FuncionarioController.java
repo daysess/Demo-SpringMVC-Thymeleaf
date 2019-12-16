@@ -1,8 +1,11 @@
 package br.com.daysesoares.curso.boot.web.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.daysesoares.curso.boot.domain.Cargo;
@@ -36,6 +40,7 @@ public class FuncionarioController {
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		model.addAttribute("funcionarios", funcionarioService.buscarTodos());
+		System.out.println("TESTE DAYSE "+TimeZone.getDefault());
 		return "funcionario/lista";
 	}
 	
@@ -74,6 +79,26 @@ public class FuncionarioController {
 		funcionarioService.excluir(id);
 		attr.addFlashAttribute("success", "Funcionario excluído com sucesso.");
 		return "redirect:/funcionarios/listar";
+	}
+	
+	@GetMapping("/buscar/nome")
+	public String getPorNome(@RequestParam("nome") String nome, ModelMap model) {
+		model.addAttribute("funcionarios", funcionarioService.buscarPorNome(nome));
+		return "/funcionario/lista";
+	}
+	
+	@GetMapping("/buscar/cargo")
+	public String getPorCargo(@RequestParam("id") Long id, ModelMap model) {
+		model.addAttribute("funcionarios", funcionarioService.buscarPorCargoId(id));
+		return "/funcionario/lista";
+	}
+	
+	@GetMapping("/buscar/data")
+	public String getPorDatas(@RequestParam("entrada") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate entrada, 
+							  @RequestParam("saida") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate saida, 
+							  ModelMap model) {
+		model.addAttribute("funcionarios", funcionarioService.buscarPorDatas(entrada, saida));
+		return "/funcionario/lista";
 	}
 	
 }
