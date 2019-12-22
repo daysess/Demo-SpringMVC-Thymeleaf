@@ -11,7 +11,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import br.com.daysesoares.curso.boot.domain.Funcionario;
 import br.com.daysesoares.curso.boot.domain.enums.UF;
 import br.com.daysesoares.curso.boot.service.CargoService;
 import br.com.daysesoares.curso.boot.service.FuncionarioService;
+import br.com.daysesoares.curso.boot.web.validator.FuncionarioValidator;
 
 @Controller
 @RequestMapping("/funcionarios")
@@ -110,6 +113,11 @@ public class FuncionarioController {
 							  ModelMap model) {
 		model.addAttribute("funcionarios", funcionarioService.buscarPorDatas(entrada, saida));
 		return "/funcionario/lista";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(new FuncionarioValidator());
 	}
 	
 }
