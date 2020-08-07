@@ -10,18 +10,18 @@ import br.com.daysesoares.curso.boot.util.PaginacaoUtil;
 @Repository 
 public class CargoDaoImpl extends AbstractDao<Cargo, Long> implements CargoDao {
 
-	public PaginacaoUtil<Cargo>  buscaPaginada(int pagina){
+	public PaginacaoUtil<Cargo>  buscaPaginada(int pagina, String direcao){
 		int tamanho = 5;
 		int inicio = (pagina - 1) * tamanho;
 		long totalRegistros = count();
 		long totalPaginas = (totalRegistros +(pagina - 1))/tamanho;
 		List<Cargo> cargos = getEntityManager()
-				.createQuery("select c from Cargo c order by c.nome asc", Cargo.class)
+				.createQuery("select c from Cargo c order by c.nome "+direcao, Cargo.class)
 				.setFirstResult(inicio)
 				.setMaxResults(tamanho)
 				.getResultList();
 		
-		return new PaginacaoUtil<>(tamanho, pagina, totalPaginas, cargos);
+		return new PaginacaoUtil<>(direcao, tamanho, pagina, totalPaginas, cargos);
 	}
 	
 	public long count() {

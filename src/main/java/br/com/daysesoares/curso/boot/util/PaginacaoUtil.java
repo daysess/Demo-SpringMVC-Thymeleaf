@@ -5,13 +5,15 @@ import java.util.List;
 
 public class PaginacaoUtil<T> {
 
+	private String direcao;
 	private int tamanho;
 	private int pagina;
 	private long totalPaginas;
 	private List<T> registros = new ArrayList<>();
-	
-	public PaginacaoUtil(int tamanho, int pagina, long totalPaginas, List<T> registros) {
+
+	public PaginacaoUtil(String direcao, int tamanho, int pagina, long totalPaginas, List<T> registros) {
 		super();
+		this.direcao = direcao;
 		this.tamanho = tamanho;
 		this.pagina = pagina;
 		this.totalPaginas = totalPaginas;
@@ -42,6 +44,11 @@ public class PaginacaoUtil<T> {
 	public long getTotalPaginas() {
 		return totalPaginas;
 	}
+
+	public String getDirecao() {
+		return direcao;
+	}
+	
 	
 	
 	
